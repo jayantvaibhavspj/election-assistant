@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AssistantResponse, ConversationContext } from '../types/index.js';
-import logger from './logger.js';
+import logger from '../utils/logger.js';
 
 class ElectionAssistantService {
   private genAI: GoogleGenerativeAI | null = null;
