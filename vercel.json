@@ -1,7 +1,6 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "framework": "other",
   "outputDirectory": "dist",
   "env": {
     "GOOGLE_API_KEY": "@google_api_key"
