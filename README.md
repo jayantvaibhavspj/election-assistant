@@ -525,3 +525,5 @@ We welcome contributions! Please:
 **Made with ❤️ for Democracy | Empowering Voters Through Education**
 
 > *"An informed electorate is the foundation of democracy."*
+#   e l e c t i o n - a s s i s t a n t  
+ 
