@@ -2,13 +2,11 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AssistantResponse, ConversationContext } from '../types/index.js';
 import logger from './logger.js';
 
-if (!process.env.GOOGLE_API_KEY) {
-  throw new Error('GOOGLE_API_KEY environment variable is required');
-}
+class ElectionAssistantService {
+  private genAI: GoogleGenerativeAI | null = null;
+  private conversationHistories: Map<string, ConversationContext> = new Map();
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-
-const ELECTION_SYSTEM_PROMPT = `You are an expert Election Process Assistant designed to help users understand voting processes, timelines, and election procedures. 
+  private static readonly ELECTION_SYSTEM_PROMPT = `You are an expert Election Process Assistant designed to help users understand voting processes, timelines, and election procedures. 
 
 Your responsibilities:
 1. Provide clear, accurate information about election processes
@@ -36,8 +34,16 @@ Always:
 - Suggest related topics users might find helpful
 - Ensure responses are accessible to all education levels`;
 
-class ElectionAssistantService {
-  private conversationHistories: Map<string, ConversationContext> = new Map();
+  private getGenAI(): GoogleGenerativeAI {
+    if (!this.genAI) {
+      const apiKey = process.env.GOOGLE_API_KEY;
+      if (!apiKey) {
+        throw new Error('GOOGLE_API_KEY environment variable is not set');
+      }
+      this.genAI = new GoogleGenerativeAI(apiKey);
+    }
+    return this.genAI;
+  }
 
   async generateResponse(
     question: string,
@@ -47,9 +53,10 @@ class ElectionAssistantService {
     try {
       logger.debug('Generating response for question', { question, sessionId, userLevel });
 
+      const genAI = this.getGenAI();
       const model = genAI.getGenerativeModel({ 
         model: 'gemini-pro',
-        systemInstruction: ELECTION_SYSTEM_PROMPT
+        systemInstruction: ElectionAssistantService.ELECTION_SYSTEM_PROMPT
       });
 
       const contextHistory = this.conversationHistories.get(sessionId);

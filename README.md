@@ -246,12 +246,12 @@ gcloud services enable run.googleapis.com containerregistry.googleapis.com
 
 # 3. Build and push
 gcloud auth configure-docker
-docker build -t gcr.io/YOUR_PROJECT_ID/election-assistant .
-docker push gcr.io/YOUR_PROJECT_ID/election-assistant
+docker build -t gcr.io/gen-lang-client-0924251278/election-assistant .
+docker push gcr.io/gen-lang-client-0924251278/election-assistant
 
 # 4. Deploy
 gcloud run deploy election-assistant \
-  --image gcr.io/YOUR_PROJECT_ID/election-assistant \
+  --image gcr.io/gen-lang-client-0924251278/election-assistant \
   --region us-central1 \
   --allow-unauthenticated \
   --set-env-vars GOOGLE_API_KEY=your_key_here
