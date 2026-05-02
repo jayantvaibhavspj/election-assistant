@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { APIError } from '../types/index.js';
-import logger from '../utils/logger.js';
+import { APIError } from '../types/index';
+import logger from '../utils/logger';
 
 export class AppError extends Error {
   constructor(

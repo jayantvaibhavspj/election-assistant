@@ -2,10 +2,10 @@ import express, { Express, Request, Response } from 'express';
 import { json, urlencoded } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import electionRoutes from './routes/electionRoutes.js';
-import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
-import { requestLogger, corsMiddleware, securityHeaders } from './middleware/index.js';
-import logger from './utils/logger.js';
+import electionRoutes from './routes/electionRoutes';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import { requestLogger, corsMiddleware, securityHeaders } from './middleware/index';
+import logger from './utils/logger';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

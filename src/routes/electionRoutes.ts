@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import electionAssistantService from '../services/aiService.js';
-import { isValidQuestion, sanitizeInput, isValidEmail } from '../utils/validators.js';
-import { AppError, asyncHandler } from '../middleware/errorHandler.js';
-import logger from '../utils/logger.js';
+import electionAssistantService from '../services/aiService';
+import { isValidQuestion, sanitizeInput, isValidEmail } from '../utils/validators';
+import { AppError, asyncHandler } from '../middleware/errorHandler';
+import logger from '../utils/logger';
 
 const router = Router();
 
