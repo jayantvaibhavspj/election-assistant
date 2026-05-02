@@ -1,125 +1,117 @@
 # 🗳️ Election Process Assistant
 
-## Project Overview
-
-An interactive, intelligent assistant powered by Google's Generative AI that helps users understand election processes, timelines, and voting procedures in an easy-to-follow, accessible way.
-
-**Challenge Vertical:** Educational AI Assistant for Civic Engagement
-
-**Live Demo:** [Cloud Run URL - to be deployed]
-
-**GitHub Repository:** [jayantvaibhjavspj/election-assistant](https://github.com/jayantvaibhjavspj/election-assistant)
+An interactive AI assistant that helps users understand election processes, voting procedures, and election timelines using Google's Generative AI.
 
 ---
 
-## ✨ Key Features
+## 📋 Table of Contents
 
-### 1. **Interactive Chat Interface**
-   - Real-time conversation with AI assistant
-   - Persistent session management
-   - Message history tracking
-   - Accessible UI with ARIA labels
-
-### 2. **Smart Knowledge Base**
-   - Voter registration guidance
-   - Election timeline information
-   - Voting methods explanation (in-person, mail-in, early voting)
-   - Accessibility information
-   - Non-partisan election information
-
-### 3. **User-Centric Features**
-   - **Three Learning Levels:** Beginner, Intermediate, Advanced
-   - **Quick Actions:** One-click access to common topics
-   - **Session Persistence:** Continuous conversation history
-   - **Feedback System:** User ratings and suggestions
-
-### 4. **Security & Accessibility**
-   - Input sanitization to prevent XSS attacks
-   - CORS protection
-   - Security headers implementation
-   - WCAG 2.1 AA compliant design
-   - Keyboard navigation support
-   - Screen reader friendly
-
-### 5. **Google Services Integration**
-   - **Google Generative AI (Gemini):** Core conversational intelligence
-   - **Designed for Cloud Run:** Production-ready containerization
-   - **Google Cloud Integration:** Ready for deployment
+1. [Quick Start](#quick-start)
+2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Project Structure](#project-structure)
+5. [Setup & Installation](#setup--installation)
+6. [API Endpoints](#api-endpoints)
+7. [Running Tests](#running-tests)
+8. [Docker & Deployment](#docker--deployment)
+9. [Security](#security)
+10. [Accessibility](#accessibility)
+11. [Contributing](#contributing)
 
 ---
 
-## 🏗️ Architecture
+## ⚡ Quick Start
 
-### Tech Stack
+```bash
+# Clone repository
+git clone https://github.com/jayantvaibhavspj/election-assistant.git
+cd election-assistant
+
+# Install dependencies
+npm install
+
+# Setup environment
+cp .env.example .env
+# Add GOOGLE_API_KEY to .env
+
+# Run locally
+npm run dev
+# Visit http://localhost:3000
+```
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| **AI Chat** | Real-time responses powered by Google Gemini |
+| **3 Learning Levels** | Beginner, Intermediate, Advanced |
+| **Session Management** | Persistent conversation history |
+| **Election Info** | Registration, voting methods, timelines |
+| **Accessible** | WCAG 2.1 AA compliant design |
+| **Secure** | XSS protection, CORS, security headers |
+| **Cloud Ready** | Docker + Cloud Run deployment |
+| **Non-Partisan** | Neutral, educational approach |
+
+---
+
+## 🏗️ Tech Stack
 
 **Backend:**
 - Node.js 20+ with Express.js
-- TypeScript for type safety
+- TypeScript (strict mode)
 - Google Generative AI SDK
-- Express middleware for security and error handling
 
 **Frontend:**
-- HTML5 with semantic markup
-- CSS3 with responsive design
-- Vanilla JavaScript (no dependencies)
-- LocalStorage for session management
+- HTML5 semantic markup
+- CSS3 responsive design
+- Vanilla JavaScript (0 dependencies)
 
-**Testing & Quality:**
-- Jest for unit testing
-- TypeScript strict mode
-- ESLint configuration
-- Comprehensive error handling
+**Quality:**
+- Jest for testing
+- ESLint for linting
+- Prettier for formatting
 
 **Deployment:**
 - Docker containerization
-- Cloud Run compatible
-- Health check endpoints
-- Environment-based configuration
+- Google Cloud Run ready
 
-### Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 election-assistant/
 ├── src/
-│   ├── server.ts                 # Express app setup
-│   ├── services/
-│   │   └── aiService.ts         # Google Generative AI integration
-│   ├── routes/
-│   │   └── electionRoutes.ts    # API endpoints
-│   ├── middleware/
-│   │   ├── errorHandler.ts      # Error handling
-│   │   └── index.ts             # Middleware setup
-│   ├── utils/
-│   │   ├── logger.ts            # Logging utility
-│   │   └── validators.ts        # Input validation
-│   └── types/
-│       └── index.ts             # TypeScript types
-├── public/
-│   └── index.html               # Frontend UI
-├── tests/
-│   ├── validators.test.ts       # Validator tests
-│   └── aiService.test.ts        # AI service tests
-├── Dockerfile                    # Container configuration
-├── cloudbuild.yaml              # Cloud Build configuration
-└── package.json                 # Dependencies
+│   ├── server.ts                   # Express setup
+│   ├── services/aiService.ts       # AI integration
+│   ├── routes/electionRoutes.ts    # API endpoints
+│   ├── middleware/                 # Error handling
+│   ├── utils/                      # Validators & logger
+│   └── types/index.ts              # TypeScript types
+├── public/index.html               # Frontend UI
+├── tests/                          # Unit tests
+├── Dockerfile                      # Container config
+├── package.json                    # Dependencies
+└── tsconfig.json                   # TypeScript config
 ```
 
 ---
 
-## 🚀 Getting Started
+## 🔧 Setup & Installation
 
 ### Prerequisites
-
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
-- Google API Key (Generative AI)
+- Google API Key (get at https://ai.google.dev)
 - Git
 
-### Local Development
+### Steps
 
-1. **Clone the Repository**
+1. **Clone Repository**
    ```bash
-   git clone https://github.com/jayantvaibhjavspj/election-assistant.git
+   git clone https://github.com/jayantvaibhavspj/election-assistant.git
    cd election-assistant
    ```
 
@@ -128,13 +120,18 @@ election-assistant/
    npm install
    ```
 
-3. **Setup Environment Variables**
+3. **Create Environment File**
    ```bash
    cp .env.example .env
-   # Edit .env and add your GOOGLE_API_KEY
+   ```
+   Edit `.env` and add:
+   ```
+   GOOGLE_API_KEY=your_api_key_here
+   PORT=3000
+   NODE_ENV=development
    ```
 
-4. **Build TypeScript**
+4. **Build Project**
    ```bash
    npm run build
    ```
@@ -143,14 +140,7 @@ election-assistant/
    ```bash
    npm run dev
    ```
-
-   The application will be available at `http://localhost:3000`
-
-6. **Run Tests**
-   ```bash
-   npm test
-   npm run test:coverage
-   ```
+   Open http://localhost:3000
 
 ---
 
@@ -159,8 +149,8 @@ election-assistant/
 ### Health Check
 ```
 GET /api/election/health
-Response: { status: "healthy", timestamp, service }
 ```
+Response: `{ status: "healthy", timestamp, service }`
 
 ### Ask Question
 ```
@@ -170,37 +160,22 @@ Body: {
   sessionId?: string,
   userLevel?: "beginner" | "intermediate" | "advanced"
 }
-Response: {
-  success: true,
-  data: {
-    question: string,
-    answer: string,
-    relatedTopics: string[],
-    resources?: string[],
-    sources: string[],
-    timestamp: string,
-    accuracy_score: number
-  }
-}
 ```
 
-### Get Election Timeline
+### Get Timeline
 ```
 GET /api/election/timeline/:election/:year?userLevel=intermediate
-Response: AssistantResponse
 ```
 
 ### Explain Process
 ```
 POST /api/election/explain
 Body: { process: string, userLevel?: string }
-Response: AssistantResponse
 ```
 
-### Get Voting Methods
+### Voting Methods
 ```
 GET /api/election/voting-methods?userLevel=beginner
-Response: AssistantResponse
 ```
 
 ### Conversation History
@@ -222,39 +197,39 @@ Body: {
 
 ---
 
-## 🧪 Testing
+## 🧪 Running Tests
 
-### Unit Tests
 ```bash
+# Run all tests
 npm test
-```
 
-### Test Coverage
-```bash
+# Watch mode
+npm test:watch
+
+# Coverage report
 npm run test:coverage
 ```
 
-Tests cover:
+**Coverage Target:** 70%+
+
+**Test Areas:**
 - Input validation
 - Email validation
 - HTML sanitization
-- Election data validation
-- AI service response generation
-- Conversation history management
+- AI service responses
+- Conversation history
 - Error handling
-
-Current Coverage: 70%+ (target)
 
 ---
 
-## 🐳 Docker Deployment
+## 🐳 Docker & Deployment
 
 ### Build Docker Image
 ```bash
 docker build -t election-assistant .
 ```
 
-### Run Docker Container
+### Run Locally
 ```bash
 docker run -p 8080:8080 \
   -e GOOGLE_API_KEY=your_key \
@@ -262,247 +237,91 @@ docker run -p 8080:8080 \
   election-assistant
 ```
 
----
-
-## ☁️ Google Cloud Run Deployment
-
-### Prerequisites
-- Google Cloud Project
-- gcloud CLI installed and configured
-- Container Registry API enabled
-
 ### Deploy to Cloud Run
 ```bash
-# Build and push to Container Registry
-gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/election-assistant
+# 1. Get API key from https://ai.google.dev
+# 2. Configure gcloud
+gcloud init
+gcloud services enable run.googleapis.com containerregistry.googleapis.com
 
-# Deploy to Cloud Run
+# 3. Build and push
+gcloud auth configure-docker
+docker build -t gcr.io/YOUR_PROJECT_ID/election-assistant .
+docker push gcr.io/YOUR_PROJECT_ID/election-assistant
+
+# 4. Deploy
 gcloud run deploy election-assistant \
   --image gcr.io/YOUR_PROJECT_ID/election-assistant \
-  --platform managed \
   --region us-central1 \
-  --memory 512Mi \
-  --set-env-vars GOOGLE_API_KEY=your_key \
-  --allow-unauthenticated
+  --allow-unauthenticated \
+  --set-env-vars GOOGLE_API_KEY=your_key_here
 ```
 
-### Environment Variables on Cloud Run
-- `GOOGLE_API_KEY` - Your Google Generative AI API key
-- `NODE_ENV` - Set to "production"
-- `PORT` - Default 8080
-- `LOG_LEVEL` - info, warn, error, debug
+---
+
+## 🔒 Security
+
+✅ **Input Sanitization** - XSS protection via HTML escaping  
+✅ **CORS Configuration** - Restricted origin access  
+✅ **Security Headers** - Content-Security-Policy, X-Frame-Options  
+✅ **Input Validation** - Length limits, format checks  
+✅ **Error Handling** - No sensitive info in errors  
+✅ **Environment Variables** - No hardcoded secrets  
+✅ **Type Safety** - TypeScript strict mode  
 
 ---
 
-## 🔒 Security Features
+## ♿ Accessibility
 
-### Input Sanitization
-- XSS protection through HTML escaping
-- Input length validation (3-1000 characters)
-- Email format validation
-- Date format validation
-
-### Security Headers
-- X-Content-Type-Options: nosniff
-- X-Frame-Options: DENY
-- X-XSS-Protection: 1; mode=block
-- Strict-Transport-Security (HSTS)
-
-### Error Handling
-- No sensitive information in error messages
-- Structured error responses
-- Detailed logging with request IDs
-- Graceful error recovery
-
-### Data Privacy
-- No personal data collection
-- Session-based interactions
-- Optional feedback email
-- GDPR compliant
+**WCAG 2.1 AA Compliant:**
+- ✅ Semantic HTML structure
+- ✅ ARIA labels and roles
+- ✅ Keyboard navigation support
+- ✅ Screen reader compatibility
+- ✅ Color contrast compliance (4.5:1)
+- ✅ Responsive design
+- ✅ Focus indicators
 
 ---
 
-## ♿ Accessibility (WCAG 2.1 AA)
+## 📊 Scripts
 
-### Features
-- Semantic HTML structure
-- ARIA labels and roles
-- Keyboard navigation support
-- Screen reader compatibility
-- Color contrast compliance
-- Responsive design (mobile-first)
-- Focus indicators
-- Alt text for images
-
-### Testing
-- Browser accessibility testing
-- Screen reader testing (NVDA, JAWS)
-- Keyboard-only navigation
-- Color contrast validation
-
----
-
-## 📊 Code Quality
-
-### TypeScript
-- Strict mode enabled
-- Full type coverage
-- Type-safe API responses
-
-### Linting
 ```bash
-npm run lint
+npm run dev          # Development with auto-reload
+npm run build        # Build TypeScript
+npm start            # Production start
+npm test             # Run tests
+npm run test:watch   # Tests in watch mode
+npm run lint         # ESLint check
+npm run format       # Prettier formatting
 ```
 
-### Code Formatting
-```bash
-npm run format
+---
+
+## 📝 Environment Variables
+
+```
+GOOGLE_API_KEY=your_api_key_here
+PORT=3000
+NODE_ENV=development|production
+LOG_LEVEL=info|warn|error|debug
 ```
 
-### Testing
-- Unit tests with Jest
-- 70%+ code coverage target
-- Edge case testing
-- Error scenario testing
-
 ---
 
-## 🎯 Performance Optimization
+## 🤝 Contributing
 
-### Frontend
-- Minimal dependencies (vanilla JS)
-- Efficient CSS with GPU acceleration
-- LocalStorage for session caching
-- Lazy loading for resources
-
-### Backend
-- Connection pooling
-- Response compression
-- Efficient logging
-- Memory management
-
-### Deployment
-- Containerized for scalability
-- Cloud Run auto-scaling
-- Health checks enabled
-- Resource limits configured
-
----
-
-## 📋 Approach & Logic
-
-### Design Philosophy
-1. **User-Centric:** Easy-to-understand explanations
-2. **Accessible:** Inclusive design for all users
-3. **Secure:** Protection against common vulnerabilities
-4. **Scalable:** Ready for high traffic
-5. **Maintainable:** Clean, documented code
-
-### AI Integration Strategy
-- **System Prompt:** Non-partisan, educational focus
-- **Context Awareness:** Conversation history tracking
-- **Level Adaptation:** Responses tailored to user expertise
-- **Related Topics:** Suggestions for further learning
-- **Source Attribution:** Citation of information sources
-
-### User Flow
-1. User opens application
-2. Chooses learning level preference
-3. Asks question or uses quick actions
-4. Receives tailored response
-5. Can ask follow-up questions
-6. Provides feedback for improvement
-7. Session history is maintained
-
----
-
-## 📈 Evaluation Focus Areas
-
-### ✅ Code Quality
-- Clean, readable TypeScript code
-- Proper separation of concerns
-- Comprehensive error handling
-- Well-documented functions
-
-### ✅ Security
-- Input validation and sanitization
-- CORS and security headers
-- Secure error handling
-- No hardcoded secrets
-
-### ✅ Efficiency
-- Optimized API calls
-- Minimal frontend dependencies
-- Efficient memory usage
-- Fast response times
-
-### ✅ Testing
-- Unit tests for core functions
-- Error scenario coverage
-- API endpoint testing
-- 70%+ code coverage
-
-### ✅ Accessibility
-- WCAG 2.1 AA compliance
-- Keyboard navigation
-- Screen reader support
-- Semantic HTML
-
-### ✅ Google Services
-- Google Generative AI integration
-- Cloud Run deployment ready
-- Google Cloud logging
-- Container Registry compatible
-
----
-
-## 📝 Assumptions
-
-1. **User Access:** Users have internet connection
-2. **API Key:** Valid Google Generative AI API key is configured
-3. **Browser Support:** Modern browsers (Chrome, Firefox, Safari, Edge)
-4. **Privacy:** Users understand their questions are processed by AI
-5. **Information Accuracy:** Users verify important information with official sources
-6. **Elections Context:** Primarily US election processes (expandable to other regions)
-
----
-
-## 🔄 Future Enhancements
-
-1. **Multi-Language Support:** Internationalization (i18n)
-2. **Regional Elections:** Localized information for different countries
-3. **Video Tutorials:** Integrated video explanations
-4. **Candidate Database:** Integration with candidate information
-5. **Mobile App:** Native iOS/Android applications
-6. **Real-time Updates:** Live election results integration
-7. **Analytics Dashboard:** Usage statistics and insights
-8. **SMS Support:** Text-based access for accessibility
-
----
-
-## 📞 Support
-
-For issues or questions:
-1. Check GitHub Issues: https://github.com/jayantvaibhjavspj/election-assistant/issues
-2. Submit feedback through the app
-3. Contact: [Your contact info]
+1. Fork repository
+2. Create feature branch (`git checkout -b feature/amazing`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing`)
+5. Open Pull Request
 
 ---
 
 ## 📄 License
 
 MIT License - See LICENSE file for details
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Write/update tests
-5. Submit a pull request
 
 ---
 
@@ -516,14 +335,12 @@ We welcome contributions! Please:
 
 ## 🙏 Acknowledgments
 
-- Google Generative AI team for the API
-- Election officials for providing accurate information
-- Community for feedback and suggestions
+- Google Generative AI team
+- Election officials for accurate information
+- Community feedback
 
 ---
 
-**Made with ❤️ for Democracy | Empowering Voters Through Education**
+**Made with ❤️ for Democracy**
 
 > *"An informed electorate is the foundation of democracy."*
-#   e l e c t i o n - a s s i s t a n t  
- 
