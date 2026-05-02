@@ -18,12 +18,12 @@ export function requestLogger(req: RequestWithId, _res: Response, next: NextFunc
   next();
 }
 
-export function corsMiddleware(_req: Request, res: Response, next: NextFunction): void {
+export function corsMiddleware(req: Request, res: Response, next: NextFunction): void {
   res.header('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGINS || '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-  if (_req.method === 'OPTIONS') {
+  
+  if (req.method === 'OPTIONS') {
     res.sendStatus(200);
   } else {
     next();

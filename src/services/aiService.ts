@@ -47,13 +47,16 @@ class ElectionAssistantService {
     try {
       logger.debug('Generating response for question', { question, sessionId, userLevel });
 
-      const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+      const model = genAI.getGenerativeModel({ 
+        model: 'gemini-pro',
+        systemInstruction: ELECTION_SYSTEM_PROMPT
+      });
 
       const contextHistory = this.conversationHistories.get(sessionId);
       let chatHistory = contextHistory?.messages || [];
 
       const messages = chatHistory.map((msg) => ({
-        role: msg.role,
+        role: msg.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: msg.content }],
       }));
 

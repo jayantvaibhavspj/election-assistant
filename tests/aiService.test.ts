@@ -13,7 +13,7 @@ jest.mock('@google/generative-ai', () => ({
   })),
 }));
 
-import electionAssistantService from '../src/services/aiService';
+import electionAssistantService from '../src/services/aiService.js';
 
 describe('ElectionAssistantService', () => {
   beforeEach(() => {
