@@ -1,27 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "src/server.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "src/server.ts"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "public/$1",
-      "check": true
-    },
-    {
-      "src": "/",
-      "dest": "public/index.html"
-    }
-  ]
+  "buildCommand": "npm run build",
+  "framework": "other",
+  "outputDirectory": "dist",
+  "env": {
+    "GOOGLE_API_KEY": "@google_api_key"
+  }
 }
