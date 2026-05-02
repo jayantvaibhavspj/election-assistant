@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Interactive Assistant for Understanding Election Processes, Timelines, and Steps" />
+    <title>Election Process Assistant</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #0066cc;
+        --secondary-color: #004499;
+        --success-color: #22c55e;
+        --warning-color: #eab308;
+        --error-color: #ef4444;
+        --light-gray: #f3f4f6;
+        --medium-gray: #d1d5db;
+        --dark-gray: #374151;
+        --text-color: #1f2937;
+        --border-radius: 8px;
+        --transition: all 0.3s ease;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: var(--text-color);
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Header */
+      header {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-size: 2.5em;
+      }
+
+      .subtitle {
+        color: var(--dark-gray);
+        font-size: 1.1em;
+        margin-bottom: 10px;
+      }
+
+      .tagline {
+        color: var(--medium-gray);
+        font-size: 0.95em;
+      }
+
+      /* Main Content */
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      /* Chat Section */
+      .chat-section {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        height: 600px;
+      }
+
+      .chat-header {
+        background: var(--primary-color);
+        color: white;
+        padding: 20px;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
+      .messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        background: #fafafa;
+      }
+
+      .message {
+        margin-bottom: 15px;
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .message.user {
+        text-align: right;
+      }
+
+      .message.user .message-content {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .message.assistant .message-content {
+        background: var(--light-gray);
+        color: var(--text-color);
+      }
+
+      .message-content {
+        display: inline-block;
+        max-width: 70%;
+        padding: 12px 16px;
+        border-radius: 12px;
+        word-wrap: break-word;
+      }
+
+      .message-time {
+        font-size: 0.8em;
+        color: var(--medium-gray);
+        margin-top: 5px;
+      }
+
+      .input-section {
+        padding: 20px;
+        border-top: 1px solid var(--medium-gray);
+        display: flex;
+        gap: 10px;
+      }
+
+      input[type='text'] {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1px solid var(--medium-gray);
+        border-radius: var(--border-radius);
+        font-size: 1em;
+        transition: var(--transition);
+      }
+
+      input[type='text']:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+      }
+
+      button {
+        padding: 12px 24px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-size: 1em;
+        transition: var(--transition);
+        font-weight: 600;
+      }
+
+      button:hover {
+        background: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      button:disabled {
+        background: var(--medium-gray);
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      /* Quick Actions */
+      .quick-actions {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .quick-actions h2 {
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        font-size: 1.5em;
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .action-btn {
+        padding: 15px 20px;
+        background: var(--light-gray);
+        border: 2px solid transparent;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        text-align: left;
+        transition: var(--transition);
+        font-size: 0.95em;
+      }
+
+      .action-btn:hover {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .action-btn span {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .action-btn small {
+        display: block;
+        opacity: 0.7;
+        font-size: 0.85em;
+      }
+
+      /* Settings */
+      .settings {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .settings h3 {
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+
+      .setting-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--medium-gray);
+        border-radius: var(--border-radius);
+        font-size: 1em;
+      }
+
+      /* Status Messages */
+      .status {
+        padding: 15px;
+        border-radius: var(--border-radius);
+        margin-bottom: 20px;
+      }
+
+      .status.loading {
+        background: var(--warning-color);
+        color: var(--text-color);
+      }
+
+      .status.success {
+        background: var(--success-color);
+        color: white;
+      }
+
+      .status.error {
+        background: var(--error-color);
+        color: white;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 1.8em;
+        }
+
+        .chat-section {
+          height: 500px;
+        }
+
+        .message-content {
+          max-width: 90%;
+        }
+
+        .action-buttons {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Accessibility */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      /* Loading animation */
+      .loader {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(0, 102, 204, 0.3);
+        border-radius: 50%;
+        border-top-color: var(--primary-color);
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        color: white;
+        margin-top: 40px;
+        padding: 20px;
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🗳️ Election Process Assistant</h1>
+        <p class="subtitle">Your Interactive Guide to Understanding Elections</p>
+        <p class="tagline">Get clear, step-by-step explanations of election processes, timelines, and voting procedures</p>
+      </header>
+
+      <div class="main-content">
+        <!-- Chat Interface -->
+        <div class="chat-section">
+          <div class="chat-header">
+            <span aria-label="Chat with Election Assistant">💬 Interactive Chat</span>
+          </div>
+
+          <div class="messages" id="messagesContainer" role="log" aria-live="polite">
+            <div class="message assistant">
+              <div class="message-content">
+                👋 Hello! I'm your Election Process Assistant. Ask me anything about election procedures, timelines, voting methods, or registration processes. I'm here to help make elections easy to understand!
+              </div>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <input
+              type="text"
+              id="questionInput"
+              placeholder="Ask about elections, voting, registration..."
+              aria-label="Type your election question"
+              accesskey="q"
+            />
+            <button id="sendButton" aria-label="Send question" onclick="sendMessage()">Send</button>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <h2>Quick Actions</h2>
+          <div class="action-buttons">
+            <button class="action-btn" onclick="askQuickQuestion('voter registration')">
+              <span>📋 Voter Registration</span>
+              <small>Learn how to register to vote</small>
+            </button>
+            <button class="action-btn" onclick="askQuickQuestion('early voting')">
+              <span>🗓️ Early Voting</span>
+              <small>Understand early voting options</small>
+            </button>
+            <button class="action-btn" onclick="askQuickQuestion('voting methods')">
+              <span>🎯 Voting Methods</span>
+              <small>Explore different ways to vote</small>
+            </button>
+            <button class="action-btn" onclick="askQuickQuestion('election timeline 2024')">
+              <span>📅 Election Timeline</span>
+              <small>Key dates and deadlines</small>
+            </button>
+            <button class="action-btn" onclick="askQuickQuestion('absentee ballot')">
+              <span>📮 Absentee Voting</span>
+              <small>Mail-in voting explained</small>
+            </button>
+            <button class="action-btn" onclick="askQuickQuestion('polling locations')">
+              <span>📍 Polling Locations</span>
+              <small>Find your voting place</small>
+            </button>
+          </div>
+
+          <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--medium-gray)" />
+
+          <div class="settings">
+            <h3>Preferences</h3>
+            <div class="setting-group">
+              <label for="userLevel">Learning Level:</label>
+              <select id="userLevel" aria-label="Select your learning level">
+                <option value="beginner">Beginner (Simple explanations)</option>
+                <option value="intermediate" selected>Intermediate (Balanced)</option>
+                <option value="advanced">Advanced (Detailed)</option>
+              </select>
+            </div>
+            <button onclick="clearHistory()" style="width: 100%; margin-top: 15px">Clear Conversation</button>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>🔒 Your privacy is protected • Powered by Google Generative AI • Made with ❤️ for Democracy</p>
+      </footer>
+    </div>
+
+    <script>
+      const API_BASE = '/api/election';
+      let sessionId = 'user-' + Date.now();
+      let conversationHistory = [];
+
+      // Initialize from localStorage
+      function initializeSession() {
+        const savedSessionId = localStorage.getItem('electionAssistantSessionId');
+        if (savedSessionId) {
+          sessionId = savedSessionId;
+        } else {
+          localStorage.setItem('electionAssistantSessionId', sessionId);
+        }
+      }
+
+      async function sendMessage() {
+        const input = document.getElementById('questionInput');
+        const question = input.value.trim();
+
+        if (!question) {
+          alert('Please enter a question');
+          return;
+        }
+
+        // Add user message to chat
+        addMessageToChat(question, 'user');
+        input.value = '';
+
+        // Show loading indicator
+        showLoadingIndicator();
+
+        try {
+          const userLevel = document.getElementById('userLevel').value;
+
+          const response = await fetch(`${API_BASE}/ask`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              question,
+              sessionId,
+              userLevel,
+            }),
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Failed to get response');
+          }
+
+          const data = await response.json();
+          removeLoadingIndicator();
+
+          // Add assistant response to chat
+          addMessageToChat(data.data.answer, 'assistant');
+
+          // Store conversation
+          conversationHistory.push({
+            question,
+            answer: data.data.answer,
+            timestamp: new Date().toISOString(),
+          });
+        } catch (error) {
+          removeLoadingIndicator();
+          addMessageToChat('Sorry, I encountered an error: ' + error.message, 'assistant');
+          console.error('Error:', error);
+        }
+      }
+
+      async function askQuickQuestion(topic) {
+        document.getElementById('questionInput').value = `Tell me about ${topic}`;
+        sendMessage();
+      }
+
+      function addMessageToChat(content, role) {
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${role}`;
+
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        messageDiv.innerHTML = `
+          <div class="message-content">${escapeHtml(content)}</div>
+          <div class="message-time">${time}</div>
+        `;
+
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+
+      function showLoadingIndicator() {
+        const messagesContainer = document.getElementById('messagesContainer');
+        const loaderDiv = document.createElement('div');
+        loaderDiv.id = 'loader';
+        loaderDiv.className = 'message assistant';
+        loaderDiv.innerHTML = '<div class="message-content"><div class="loader"></div> Thinking...</div>';
+        messagesContainer.appendChild(loaderDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+
+      function removeLoadingIndicator() {
+        const loader = document.getElementById('loader');
+        if (loader) {
+          loader.remove();
+        }
+      }
+
+      function clearHistory() {
+        if (confirm('Are you sure you want to clear the conversation history?')) {
+          document.getElementById('messagesContainer').innerHTML =
+            '<div class="message assistant"><div class="message-content">👋 Conversation cleared. How can I help you with elections?</div></div>';
+          conversationHistory = [];
+          sessionId = 'user-' + Date.now();
+          localStorage.setItem('electionAssistantSessionId', sessionId);
+        }
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Event listeners
+      document.getElementById('questionInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+
+      // Check API health on load
+      async function checkHealth() {
+        try {
+          const response = await fetch(`${API_BASE}/health`);
+          if (response.ok) {
+            console.log('Election Assistant is healthy');
+          }
+        } catch (error) {
+          console.error('Health check failed:', error);
+        }
+      }
+
+      // Initialize
+      window.addEventListener('load', () => {
+        initializeSession();
+        checkHealth();
+      });
+    </script>
+  </body>
+</html>
