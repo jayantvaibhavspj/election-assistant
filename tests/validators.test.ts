@@ -1,4 +1,4 @@
-import { isValidQuestion, isValidEmail, sanitizeInput, isValidElectionData } from '../src/utils/validators.js';
+import { isValidQuestion, isValidEmail, sanitizeInput, isValidElectionData } from '../src/utils/validators';
 
 describe('Validators', () => {
   describe('isValidQuestion', () => {

@@ -35,7 +35,7 @@ export function isValidQuestion(question: string): ValidationResult {
 export function sanitizeInput(input: string): string {
   return input
     .trim()
-    .replace(/[<>\"']/g, (match: string): string => {
+    .replace(/[<>'"]/g, (match: string): string => {
       const escapeMap: Record<string, string> = {
         '<': '&lt;',
         '>': '&gt;',

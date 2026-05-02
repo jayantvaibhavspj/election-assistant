@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { AssistantResponse, ConversationContext } from '../types/index.js';
-import logger from '../utils/logger.js';
+import { AssistantResponse, ConversationContext } from '../types/index';
+import logger from '../utils/logger';
 
 class ElectionAssistantService {
   private genAI: GoogleGenerativeAI | null = null;
@@ -63,7 +63,7 @@ Always:
       });
 
       const contextHistory = this.conversationHistories.get(sessionId);
-      let chatHistory = contextHistory?.messages || [];
+      const chatHistory = contextHistory?.messages || [];
 
       const messages = chatHistory.map((msg): { role: string; parts: { text: string }[] } => ({
         role: msg.role === 'assistant' ? 'model' : 'user',
