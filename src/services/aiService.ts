@@ -56,7 +56,10 @@ Always:
       const genAI = this.getGenAI();
       const model = genAI.getGenerativeModel({ 
         model: 'gemini-pro',
-        systemInstruction: ElectionAssistantService.ELECTION_SYSTEM_PROMPT
+        systemInstruction: {
+          role: 'system',
+          parts: [{ text: ElectionAssistantService.ELECTION_SYSTEM_PROMPT }]
+        }
       });
 
       const contextHistory = this.conversationHistories.get(sessionId);
