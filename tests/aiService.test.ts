@@ -13,6 +13,9 @@ jest.mock('@google/generative-ai', () => ({
   })),
 }));
 
+// Set dummy API key for testing
+process.env.GOOGLE_API_KEY = 'test-api-key';
+
 import electionAssistantService from '../src/services/aiService.js';
 
 describe('ElectionAssistantService', () => {

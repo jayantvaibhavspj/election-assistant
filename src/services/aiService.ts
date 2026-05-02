@@ -65,7 +65,7 @@ Always:
       const contextHistory = this.conversationHistories.get(sessionId);
       let chatHistory = contextHistory?.messages || [];
 
-      const messages = chatHistory.map((msg) => ({
+      const messages = chatHistory.map((msg): { role: string; parts: { text: string }[] } => ({
         role: msg.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: msg.content }],
       }));

@@ -35,7 +35,7 @@ export function isValidQuestion(question: string): ValidationResult {
 export function sanitizeInput(input: string): string {
   return input
     .trim()
-    .replace(/[<>\"']/g, (match) => {
+    .replace(/[<>\"']/g, (match: string): string => {
       const escapeMap: Record<string, string> = {
         '<': '&lt;',
         '>': '&gt;',
@@ -91,7 +91,7 @@ export function parseTimelineFromText(text: string): Record<string, string> {
 
   for (const line of lines) {
     if (line.includes(':')) {
-      const [key, value] = line.split(':').map((s) => s.trim());
+      const [key, value] = line.split(':').map((s: string): string => s.trim());
       if (key && value) {
         timeline[key] = value;
       }

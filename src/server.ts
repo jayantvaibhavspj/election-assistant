@@ -1,4 +1,4 @@
-import express, { Express } from 'express';
+import express, { Express, Request, Response } from 'express';
 import { json, urlencoded } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/api/election', electionRoutes);
 
 // Main page - serve index.html
-app.get('/', (_req, res) => {
+app.get('/', (_req: Request, res: Response): void => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
@@ -41,7 +41,7 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, (): void => {
   logger.info(`Election Assistant Server running on port ${PORT}`);
   logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
